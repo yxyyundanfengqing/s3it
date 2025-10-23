@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spatially Situated Social Intelligence Test (S³IT)</title>
+    <style>
+        /* --- 全局和基础样式 --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdfdfd;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #111;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.2em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin-top: 2em;
+            margin-bottom: 1em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- 顶部按钮链接 --- */
+        .link-buttons {
+            text-align: center;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+            color: #333;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #e9e9e9;
+            border-color: #ccc;
+            text-decoration: none;
+        }
+
+        /* --- 视频和图片 --- */
+        .teaser-video, .content-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background-color: #eee;
+        }
+        
+        .teaser-video {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- 内容区域布局 --- */
+        .content-section {
+            margin-top: 3em;
+        }
+
+        .two-column {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .two-column .content-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .two-column .content-text {
+            flex: 2;
+        }
+
+        /* --- Test Procedure (Phase切换) --- */
+        .phase-switcher {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .phase-btn {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+        }
+
+        .phase-btn.active {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        .phase-content {
+            display: none; /* 默认隐藏所有phase内容 */
+        }
+
+        .phase-content.visible {
+            display: flex; /* 只显示激活的phase内容 */
+        }
+
+        /* --- 实验结果表格 --- */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .results-table th, .results-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .results-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+
+        .results-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* --- 引用格式 --- */
+        .citation-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* --- 响应式设计 --- */
+        @media (max-width: 768px) {
+            .two-column {
+                flex-direction: column;
+            }
+            .two-column .content-image {
+                min-width: 100%;
+            }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.2em; }
+            h3 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- 论文标题和作者 -->
+        <header>
+            <h1>Spatially Situated Social Intelligence Test (S³IT)</h1>
+            <h2>Anonymous Authors</h2>
+            <p style="text-align:center; font-style:italic;">Anonymous Conference 2025</p>
+        </header>
+
+        <!-- 链接按钮 -->
+        <div class="link-buttons">
+            <a href="assets/AAAI26_SocialIntelligenceTest (3).pdf" class="btn" target="_blank">📄 Paper</a>
+            <a href="#" class="btn" target="_blank">💻 Code</a>
+            <a href="#" class="btn" target="_blank">🎬 Demo</a>
+        </div>
+
+        <!-- 演示视频 -->
+        <section class="content-section">
+            <!-- 提示：请将下面的 src 替换为你的视频文件路径或URL -->
+            <video class="teaser-video" autoplay loop muted playsinline poster="assets/teaser.png">
+                <source src="assets/5305_video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+
+        <!-- Abstract -->
+        <section class="content-section" id="abstract">
+            <h3>Abstract</h3>
+            <div class="two-column">
+                <div class="content-image">
+                    <!-- 提示：这是图1的占位符，请替换为你的图片路径 -->
+                    <img src="assets/teaser.png" alt="Overview of the seat arrangement task">
+                </div>
+                <div class="content-text">
+                    <p>
+                        Embodied agents are evolving from physical task executors to social collaborators in human environments. This evolution demands what we term embodied social intelligence: the ability to comprehend and navigate complex, implicit social norms while adhering to physical constraints. However, a critical gap pervades current research paradigms. To address this challenge, we introduce Spatially Situated Social Intelligence Test (S³IT), a benchmark specifically designed to evaluate embodied social intelligence. It is centered on a novel and challenging seat-ordering task, requiring an agent to arrange seating in a 3D environment for a group of large language model-driven (LLM-driven) NPCs with diverse identities, preferences, and intricate interpersonal relationships. Leveraging the proposed benchmark, we evaluates state-of-the-art LLMs, uncovering significant deficiencies in their grasp of social norms, including social relations, abstract preferences, and conflict resolution, as well as spatial perception within embodied environments.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Procedure -->
+        <section class="content-section" id="procedure">
+            <h3>Testing Pipeline</h3>
+            <div class="phase-switcher">
+                <button class="phase-btn active" onclick="switchPhase(1)">Phase 1: Preference Extraction</button>
+                <button class="phase-btn" onclick="switchPhase(2)">Phase 2: Environmental Cognition</button>
+                <button class="phase-btn" onclick="switchPhase(3)">Phase 3: Decision-Making</button>
+            </div>
+            
+            <!-- Phase 1 内容 -->
+            <div id="phase-1" class="phase-content visible">
+                <div class="two-column">
+                    <div class="content-image">
+                        <!-- 提示：这是图6的占位符，请替换为你自己的图片 -->
+                        <img src="assets/stage1.png" alt="Phase 1: NPC Preference Extraction">
+                    </div>
+                    <div class="content-text">
+                        <h4>Phase I: NPC Preference Extraction and Summarization</h4>
+                        <p>To emulate the real-world process of understanding others' needs, this phase constructs a structured preference profile for each NPC by extracting and summarizing information from simulated dialogues. The agent proactively elicits preferences through natural language interaction and distills the unstructured dialogue into structured profiles, including a description and an intensity score.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase 2 内容 -->
+            <div id="phase-2" class="phase-content">
+                <div class="two-column">
+                    <div class="content-image">
+                        <!-- 提示：这是图7的占位符，请替换为你自己的图片 -->
+                        <img src="assets/stage2.png" alt="Phase 2: Environmental Cognition">
+                    </div>
+                    <div class="content-text">
+                         <h4>Phase II: Environmental Cognition</h4>
+                        <p>This phase evaluates the agent's efficacy in exploring the simulated environment and converting raw visual inputs into structured representations. The agent perceives and interacts with the environment through a target-driven, iterative exploration process, dynamically refining its understanding of environmental features like seat properties and spatial relationships.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 内容 -->
+            <div id="phase-3" class="phase-content">
+                <div class="two-column">
+                    <div class="content-image">
+                        <!-- 提示：这是图8的占位符，请替换为你自己的图片 -->
+                        <img src="assets/stage3.png" alt="Phase 3: Multi-Constraint Decision-Making">
+                    </div>
+                    <div class="content-text">
+                        <h4>Phase III: Multi-Constraint Decision-Making</h4>
+                        <p>This phase assesses the agent’s higher-order social reasoning under complex physical and social constraints. It uses an iterative "generate-and-reflect" optimization loop, where the agent generates a seating plan, reflects on its quality, and refines the solution by leveraging both static context (profiles, environment) and dynamic feedback from previous iterations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 实验结果表格 -->
+        <section class="content-section" id="results">
+            <h3>Results</h3>
+            <p>Performance of widely-used models on the S³IT Benchmark. Scores are reported as: unweighted (weighted).</p>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Embodied</th>
+                        <th>Social</th>
+                        <th>Conflict</th>
+                        <th>Average</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>o4-mini</td>
+                        <td>69.8 (70.1)</td>
+                        <td>67.7 (67.7)</td>
+                        <td>63.6 (67.5)</td>
+                        <td>68.1 (69.8)</td>
+                    </tr>
+                    <tr>
+                        <td>o3</td>
+                        <td>70.3 (71.7)</td>
+                        <td>68.6 (68.3)</td>
+                        <td>63.8 (68.3)</td>
+                        <td>68.4 (70.6)</td>
+                    </tr>
+                    <tr>
+                         <td>GPT-4o</td>
+                        <td>66.0 (66.1)</td>
+                        <td>64.1 (63.3)</td>
+                        <td>58.9 (60.3)</td>
+                        <td>63.5 (64.0)</td>
+                    </tr>
+                     <tr>
+                        <td>GPT-4o-mini</td>
+                        <td>61.9 (61.8)</td>
+                        <td>60.2 (59.2)</td>
+                        <td>56.6 (57.3)</td>
+                        <td>60.4 (60.4)</td>
+                    </tr>
+                     <tr>
+                        <td>Gemini-2.5-pro</td>
+                        <td>73.5 (75.2)</td>
+                        <td>69.7 (68.7)</td>
+                        <td>62.5 (65.9)</td>
+                        <td>70.0 (71.9)</td>
+                    </tr>
+                    <!-- 其他模型可以继续添加 -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Citation -->
+        <section class="content-section" id="citation">
+            <h3>Citation</h3>
+            <p>If you find our work useful in your research, please consider citing:</p>
+            <div class="citation-box">
+@inproceedings{anonymous2025s3it,
+  title={Spatially Situated Social Intelligence Test (S³IT)},
+  author={Anonymous, A. and Anonymous, B.},
+  booktitle={Anonymous Conference},
+  year={2025}
+}
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // --- Test Procedure 的 Phase 切换功能 ---
+        function switchPhase(phaseNumber) {
+            // 隐藏所有 phase 内容
+            const allPhases = document.querySelectorAll('.phase-content');
+            allPhases.forEach(phase => {
+                phase.classList.remove('visible');
+            });
+
+            // 移除所有按钮的 'active' 状态
+            const allButtons = document.querySelectorAll('.phase-btn');
+            allButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // 显示选定的 phase 内容
+            const activePhase = document.getElementById('phase-' + phaseNumber);
+            if (activePhase) {
+                activePhase.classList.add('visible');
+            }
+
+            // 为选定的按钮添加 'active' 状态
+            const activeButton = document.querySelector(`.phase-btn:nth-child(${phaseNumber})`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
