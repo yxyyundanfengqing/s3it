@@ -169,8 +169,40 @@
             font-weight: 600;
         }
 
-        .results-table tr:nth-child(even) {
+        .results-table th.sortable {
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+        }
+
+        .results-table th.sortable::after {
+            content: '↕';
+            font-size: 0.75em;
+            color: #999;
+            margin-left: 6px;
+        }
+
+        .results-table th.sortable[data-sort="asc"]::after {
+            content: '↑';
+            color: #007bff;
+        }
+
+        .results-table th.sortable[data-sort="desc"]::after {
+            content: '↓';
+            color: #007bff;
+        }
+
+        .results-table tbody tr:nth-child(even) {
             background-color: #f9f9f9;
+        }
+
+        .results-table tbody tr:hover {
+            background-color: #f0f7ff;
+        }
+
+        .results-table td.best {
+            font-weight: 700;
+            color: #007bff;
         }
 
         /* --- 引用格式 --- */
@@ -297,55 +329,19 @@
         <!-- 实验结果表格 -->
         <section class="content-section" id="results">
             <h3>Results</h3>
-            <p>Performance of widely-used models on the S³IT Benchmark. Scores are reported as: unweighted (weighted).</p>
-            <table class="results-table">
+            <p>Performance of state-of-the-art models on the S³IT benchmark. Click a column header to sort; bold numbers mark the top score in each dimension.</p>
+            <table id="results-table" class="results-table">
                 <thead>
                     <tr>
-                        <th>Model</th>
-                        <th>Embodied</th>
-                        <th>Social</th>
-                        <th>Conflict</th>
-                        <th>Average</th>
+                        <th scope="col" data-key="model" data-sortable="true">Model</th>
+                        <th scope="col" data-key="embodied" data-sortable="true">Embodied</th>
+                        <th scope="col" data-key="social" data-sortable="true">Social</th>
+                        <th scope="col" data-key="conflict" data-sortable="true">Conflict</th>
+                        <th scope="col" data-key="pg" data-sortable="true">PG</th>
+                        <th scope="col" data-key="average" data-sortable="true">Average</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>o4-mini</td>
-                        <td>69.8 (70.1)</td>
-                        <td>67.7 (67.7)</td>
-                        <td>63.6 (67.5)</td>
-                        <td>68.1 (69.8)</td>
-                    </tr>
-                    <tr>
-                        <td>o3</td>
-                        <td>70.3 (71.7)</td>
-                        <td>68.6 (68.3)</td>
-                        <td>63.8 (68.3)</td>
-                        <td>68.4 (70.6)</td>
-                    </tr>
-                    <tr>
-                         <td>GPT-4o</td>
-                        <td>66.0 (66.1)</td>
-                        <td>64.1 (63.3)</td>
-                        <td>58.9 (60.3)</td>
-                        <td>63.5 (64.0)</td>
-                    </tr>
-                     <tr>
-                        <td>GPT-4o-mini</td>
-                        <td>61.9 (61.8)</td>
-                        <td>60.2 (59.2)</td>
-                        <td>56.6 (57.3)</td>
-                        <td>60.4 (60.4)</td>
-                    </tr>
-                     <tr>
-                        <td>Gemini-2.5-pro</td>
-                        <td>73.5 (75.2)</td>
-                        <td>69.7 (68.7)</td>
-                        <td>62.5 (65.9)</td>
-                        <td>70.0 (71.9)</td>
-                    </tr>
-                    <!-- 其他模型可以继续添加 -->
-                </tbody>
+                <tbody></tbody>
             </table>
         </section>
 
@@ -391,6 +387,117 @@
             if (activeButton) {
                 activeButton.classList.add('active');
             }
+        }
+
+        const resultsData = [
+            { model: 'GPT-4o-mini', embodied: 16.7, social: 34.7, conflict: 45.8, pg: 1.6, average: 19.3 },
+            { model: 'Claude-4.5', embodied: 19.1, social: 37.6, conflict: 46.0, pg: 4.8, average: 23.1 },
+            { model: 'GPT-4.1-mini', embodied: 22.8, social: 39.3, conflict: 42.5, pg: 3.7, average: 26.8 },
+            { model: 'GPT-4o', embodied: 24.6, social: 43.0, conflict: 51.7, pg: 3.3, average: 28.2 },
+            { model: 'Doubao-1.5', embodied: 24.6, social: 43.0, conflict: 62.5, pg: 3.8, average: 28.3 },
+            { model: 'GPT-4.1', embodied: 23.3, social: 43.2, conflict: 55.4, pg: 3.8, average: 29.3 },
+            { model: 'o4-mini', embodied: 29.0, social: 54.5, conflict: 89.5, pg: 6.8, average: 41.6 },
+            { model: 'GPT-5', embodied: 29.0, social: 56.9, conflict: 86.1, pg: 15.4, average: 42.7 },
+            { model: 'o3', embodied: 32.9, social: 53.8, conflict: 89.0, pg: 12.7, average: 43.1 },
+            { model: 'Gemini-2.5-pro', embodied: 40.6, social: 56.2, conflict: 85.7, pg: 8.8, average: 47.8 }
+        ];
+
+        const tableElement = document.getElementById('results-table');
+
+        if (tableElement) {
+            const tableHeaders = Array.from(tableElement.querySelectorAll('thead th[data-key]'));
+            const numericKeys = tableHeaders
+                .map(header => header.dataset.key)
+                .filter(key => key && key !== 'model');
+
+            const maxValues = {};
+            numericKeys.forEach(key => {
+                maxValues[key] = Math.max(...resultsData.map(row => row[key]));
+            });
+
+            let sortState = { key: 'average', direction: 'desc' };
+
+            function formatCellValue(key, value) {
+                return numericKeys.includes(key) ? value.toFixed(1) : value;
+            }
+
+            function createCell(key, value) {
+                const cell = key === 'model' ? document.createElement('th') : document.createElement('td');
+                if (key === 'model') {
+                    cell.scope = 'row';
+                }
+                if (numericKeys.includes(key)) {
+                    const bestValue = maxValues[key];
+                    if (Math.abs(bestValue - value) < 1e-6) {
+                        cell.classList.add('best');
+                    }
+                }
+                cell.textContent = formatCellValue(key, value);
+                return cell;
+            }
+
+            function sortData() {
+                const sorted = [...resultsData];
+                const { key, direction } = sortState;
+                const multiplier = direction === 'asc' ? 1 : -1;
+                sorted.sort((a, b) => {
+                    if (key === 'model') {
+                        return a[key].localeCompare(b[key]) * multiplier;
+                    }
+                    return (a[key] - b[key]) * multiplier;
+                });
+                return sorted;
+            }
+
+            function renderRows(data) {
+                const tbody = tableElement.querySelector('tbody');
+                tbody.innerHTML = '';
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tableHeaders.forEach(header => {
+                        const key = header.dataset.key;
+                        const cell = createCell(key, row[key]);
+                        tr.appendChild(cell);
+                    });
+                    tbody.appendChild(tr);
+                });
+            }
+
+            function updateSortIndicators() {
+                tableHeaders.forEach(header => {
+                    if (header.dataset.sortable === 'true') {
+                        const key = header.dataset.key;
+                        const sortDirection = key === sortState.key ? sortState.direction : 'none';
+                        header.classList.add('sortable');
+                        header.dataset.sort = sortDirection;
+                        const ariaValue = sortDirection === 'asc' ? 'ascending' : sortDirection === 'desc' ? 'descending' : 'none';
+                        header.setAttribute('aria-sort', ariaValue);
+                    }
+                });
+            }
+
+            tableHeaders.forEach(header => {
+                if (header.dataset.sortable === 'true') {
+                    header.dataset.sort = 'none';
+                    header.setAttribute('aria-sort', 'none');
+                    header.addEventListener('click', () => {
+                        const key = header.dataset.key;
+                        if (sortState.key === key) {
+                            sortState.direction = sortState.direction === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            sortState = {
+                                key,
+                                direction: key === 'model' ? 'asc' : 'desc'
+                            };
+                        }
+                        updateSortIndicators();
+                        renderRows(sortData());
+                    });
+                }
+            });
+
+            updateSortIndicators();
+            renderRows(sortData());
         }
     </script>
 
