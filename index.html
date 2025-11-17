@@ -120,34 +120,113 @@
         }
 
         /* --- Test Procedure (Phase切换) --- */
-        .phase-switcher {
+        .phase-wrapper {
+            margin-top: 30px;
+        }
+
+        .phase-steps {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 10px 0 40px;
+        }
+
+        .phase-steps::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            right: 50px;
+            top: 35px;
+            height: 2px;
+            background: linear-gradient(90deg, #dce3f5 0%, #e1e9ff 100%);
+            z-index: 0;
+        }
+
+        .phase-step {
+            flex: 1;
             text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .phase-btn {
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 8px 16px;
             cursor: pointer;
-            font-size: 1em;
-            border-radius: 5px;
-            margin: 0 5px;
-            transition: background-color 0.3s;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.2s ease;
         }
 
-        .phase-btn.active {
-            background-color: #007bff;
+        .phase-step:hover {
+            transform: translateY(-3px);
+        }
+
+        .phase-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #5f6a81;
+            background: #fff;
+            border: 2px solid #cdd9ed;
+            box-shadow: 0 4px 15px rgba(13, 36, 76, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .phase-step.active .phase-circle {
+            background: linear-gradient(135deg, #0b5cff 0%, #3d9dff 100%);
+            border-color: transparent;
             color: #fff;
-            border-color: #007bff;
+            box-shadow: 0 10px 25px rgba(11, 92, 255, 0.25);
         }
 
-        .phase-content {
-            display: none; /* 默认隐藏所有phase内容 */
+        .phase-step h4 {
+            margin: 0;
+            font-size: 1.05em;
+            color: #1f2937;
         }
 
-        .phase-content.visible {
-            display: flex; /* 只显示激活的phase内容 */
+        .phase-step p {
+            margin: 6px 0 0;
+            font-size: 0.85em;
+            color: #60708f;
+        }
+
+        .phase-step .step-text {
+            max-width: 220px;
+            margin: 0 auto;
+        }
+
+        .phase-panels {
+            margin-top: 10px;
+        }
+
+        .phase-panel {
+            display: none;
+            border: 1px solid #e4e9f7;
+            border-radius: 18px;
+            padding: 30px;
+            background: linear-gradient(170deg, rgba(243, 247, 255, 0.9) 0%, #ffffff 100%);
+            box-shadow: 0 18px 35px -25px rgba(10, 27, 63, 0.45);
+            animation: fadeIn 0.35s ease;
+        }
+
+        .phase-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .phase-panel .two-column {
+            margin-top: 0;
+        }
+
+        .phase-panel .content-text h4 {
+            margin-top: 0;
+            margin-bottom: 12px;
         }
 
         /* --- 实验结果表格 --- */
@@ -225,6 +304,34 @@
             .two-column .content-image {
                 min-width: 100%;
             }
+            .phase-steps {
+                flex-direction: column;
+                gap: 25px;
+                padding-bottom: 10px;
+            }
+            .phase-steps::before {
+                display: none;
+            }
+            .phase-step {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                gap: 16px;
+            }
+            .phase-step .step-text {
+                margin: 0;
+                max-width: none;
+            }
+            .phase-step h4 {
+                font-size: 1em;
+            }
+            .phase-step p {
+                margin: 2px 0 0;
+                font-size: 0.8em;
+            }
+            .phase-panel {
+                padding: 24px;
+            }
             h1 { font-size: 2em; }
             h2 { font-size: 1.2em; }
             h3 { font-size: 1.5em; }
@@ -277,51 +384,67 @@
         <!-- Test Procedure -->
         <section class="content-section" id="procedure">
             <h3>Testing Pipeline</h3>
-            <div class="phase-switcher">
-                <button class="phase-btn active" onclick="switchPhase(1)">Phase 1: Preference Extraction</button>
-                <button class="phase-btn" onclick="switchPhase(2)">Phase 2: Environmental Cognition</button>
-                <button class="phase-btn" onclick="switchPhase(3)">Phase 3: Decision-Making</button>
-            </div>
-            
-            <!-- Phase 1 内容 -->
-            <div id="phase-1" class="phase-content visible">
-                <div class="two-column">
-                    <div class="content-image">
-                        <!-- 提示：这是图6的占位符，请替换为你自己的图片 -->
-                        <img src="assets/stage1.png" alt="Phase 1: NPC Preference Extraction">
+            <div class="phase-wrapper" role="tablist" aria-label="Testing phases">
+                <div class="phase-steps">
+                    <div class="phase-step active" id="phase-tab-1" role="tab" tabindex="0" aria-selected="true" aria-controls="phase-panel-1" data-phase="1">
+                        <div class="phase-circle">1</div>
+                        <div class="step-text">
+                            <h4>Preference Extraction</h4>
+                            <p>Dialogue-driven NPC profiling</p>
+                        </div>
                     </div>
-                    <div class="content-text">
-                        <h4>Phase I: NPC Preference Extraction and Summarization</h4>
-                        <p>To emulate the real-world process of understanding others' needs, this phase constructs a structured preference profile for each NPC by extracting and summarizing information from simulated dialogues. The agent proactively elicits preferences through natural language interaction and distills the unstructured dialogue into structured profiles, including a description and an intensity score.</p>
+                    <div class="phase-step" id="phase-tab-2" role="tab" tabindex="-1" aria-selected="false" aria-controls="phase-panel-2" data-phase="2">
+                        <div class="phase-circle">2</div>
+                        <div class="step-text">
+                            <h4>Environmental Cognition</h4>
+                            <p>Structured mapping of the 3D scene</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Phase 2 内容 -->
-            <div id="phase-2" class="phase-content">
-                <div class="two-column">
-                    <div class="content-image">
-                        <!-- 提示：这是图7的占位符，请替换为你自己的图片 -->
-                        <img src="assets/stage2.png" alt="Phase 2: Environmental Cognition">
-                    </div>
-                    <div class="content-text">
-                         <h4>Phase II: Environmental Cognition</h4>
-                        <p>This phase evaluates the agent's efficacy in exploring the simulated environment and converting raw visual inputs into structured representations. The agent perceives and interacts with the environment through a target-driven, iterative exploration process, dynamically refining its understanding of environmental features like seat properties and spatial relationships.</p>
+                    <div class="phase-step" id="phase-tab-3" role="tab" tabindex="-1" aria-selected="false" aria-controls="phase-panel-3" data-phase="3">
+                        <div class="phase-circle">3</div>
+                        <div class="step-text">
+                            <h4>Decision-Making</h4>
+                            <p>Iterative multi-constraint reasoning</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Phase 3 内容 -->
-            <div id="phase-3" class="phase-content">
-                <div class="two-column">
-                    <div class="content-image">
-                        <!-- 提示：这是图8的占位符，请替换为你自己的图片 -->
-                        <img src="assets/stage3.png" alt="Phase 3: Multi-Constraint Decision-Making">
-                    </div>
-                    <div class="content-text">
-                        <h4>Phase III: Multi-Constraint Decision-Making</h4>
-                        <p>This phase assesses the agent’s higher-order social reasoning under complex physical and social constraints. It uses an iterative "generate-and-reflect" optimization loop, where the agent generates a seating plan, reflects on its quality, and refines the solution by leveraging both static context (profiles, environment) and dynamic feedback from previous iterations.</p>
-                    </div>
+                <div class="phase-panels">
+                    <article id="phase-panel-1" class="phase-panel active" role="tabpanel" tabindex="0" aria-labelledby="phase-tab-1">
+                        <div class="two-column">
+                            <div class="content-image">
+                                <img src="assets/stage1.png" alt="Phase 1: NPC Preference Extraction">
+                            </div>
+                            <div class="content-text">
+                                <h4>Phase I: NPC Preference Extraction and Summarization</h4>
+                                <p>To emulate the real-world process of understanding others' needs, this phase constructs a structured preference profile for each NPC by extracting and summarizing information from simulated dialogues. The agent proactively elicits preferences through natural language interaction and distills the unstructured dialogue into structured profiles, including a description and an intensity score.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="phase-panel-2" class="phase-panel" role="tabpanel" tabindex="0" aria-labelledby="phase-tab-2" hidden>
+                        <div class="two-column">
+                            <div class="content-image">
+                                <img src="assets/stage2.png" alt="Phase 2: Environmental Cognition">
+                            </div>
+                            <div class="content-text">
+                                <h4>Phase II: Environmental Cognition</h4>
+                                <p>This phase evaluates the agent's efficacy in exploring the simulated environment and converting raw visual inputs into structured representations. The agent perceives and interacts with the environment through a target-driven, iterative exploration process, dynamically refining its understanding of environmental features like seat properties and spatial relationships.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="phase-panel-3" class="phase-panel" role="tabpanel" tabindex="0" aria-labelledby="phase-tab-3" hidden>
+                        <div class="two-column">
+                            <div class="content-image">
+                                <img src="assets/stage3.png" alt="Phase 3: Multi-Constraint Decision-Making">
+                            </div>
+                            <div class="content-text">
+                                <h4>Phase III: Multi-Constraint Decision-Making</h4>
+                                <p>This phase assesses the agent’s higher-order social reasoning under complex physical and social constraints. It uses an iterative "generate-and-reflect" optimization loop, where the agent generates a seating plan, reflects on its quality, and refines the solution by leveraging both static context (profiles, environment) and dynamic feedback from previous iterations.</p>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -362,31 +485,83 @@
     </div>
 
     <script>
-        // --- Test Procedure 的 Phase 切换功能 ---
-        function switchPhase(phaseNumber) {
-            // 隐藏所有 phase 内容
-            const allPhases = document.querySelectorAll('.phase-content');
-            allPhases.forEach(phase => {
-                phase.classList.remove('visible');
+        // --- Testing Pipeline stepper interaction ---
+        const phaseSteps = Array.from(document.querySelectorAll('.phase-step'));
+        const phasePanels = Array.from(document.querySelectorAll('.phase-panel'));
+
+        function setActivePhase(phaseId) {
+            phaseSteps.forEach(step => {
+                const isActive = step.dataset.phase === phaseId;
+                step.classList.toggle('active', isActive);
+                step.setAttribute('aria-selected', String(isActive));
+                step.tabIndex = isActive ? 0 : -1;
             });
 
-            // 移除所有按钮的 'active' 状态
-            const allButtons = document.querySelectorAll('.phase-btn');
-            allButtons.forEach(button => {
-                button.classList.remove('active');
+            phasePanels.forEach(panel => {
+                const isActive = panel.id === `phase-panel-${phaseId}`;
+                panel.classList.toggle('active', isActive);
+                panel.toggleAttribute('hidden', !isActive);
+                panel.setAttribute('aria-hidden', String(!isActive));
+            });
+        }
+
+        function focusPhase(phaseId) {
+            const target = phaseSteps.find(step => step.dataset.phase === phaseId);
+            if (target) {
+                target.focus();
+            }
+        }
+
+        function getAdjacentPhase(currentPhase, direction) {
+            const currentIndex = phaseSteps.findIndex(step => step.dataset.phase === currentPhase);
+            if (currentIndex === -1) {
+                return currentPhase;
+            }
+            const nextIndex = (currentIndex + direction + phaseSteps.length) % phaseSteps.length;
+            return phaseSteps[nextIndex].dataset.phase;
+        }
+
+        phaseSteps.forEach(step => {
+            step.addEventListener('click', () => {
+                const phaseId = step.dataset.phase;
+                setActivePhase(phaseId);
             });
 
-            // 显示选定的 phase 内容
-            const activePhase = document.getElementById('phase-' + phaseNumber);
-            if (activePhase) {
-                activePhase.classList.add('visible');
-            }
+            step.addEventListener('keydown', event => {
+                const phaseId = step.dataset.phase;
+                if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    const nextPhase = getAdjacentPhase(phaseId, 1);
+                    setActivePhase(nextPhase);
+                    focusPhase(nextPhase);
+                } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    const prevPhase = getAdjacentPhase(phaseId, -1);
+                    setActivePhase(prevPhase);
+                    focusPhase(prevPhase);
+                } else if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setActivePhase(phaseId);
+                } else if (event.key === 'Home') {
+                    event.preventDefault();
+                    const firstPhase = phaseSteps[0]?.dataset.phase;
+                    if (firstPhase) {
+                        setActivePhase(firstPhase);
+                        focusPhase(firstPhase);
+                    }
+                } else if (event.key === 'End') {
+                    event.preventDefault();
+                    const lastPhase = phaseSteps[phaseSteps.length - 1]?.dataset.phase;
+                    if (lastPhase) {
+                        setActivePhase(lastPhase);
+                        focusPhase(lastPhase);
+                    }
+                }
+            });
+        });
 
-            // 为选定的按钮添加 'active' 状态
-            const activeButton = document.querySelector(`.phase-btn:nth-child(${phaseNumber})`);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
+        if (phaseSteps.length) {
+            setActivePhase(phaseSteps[0].dataset.phase);
         }
 
         const resultsData = [
