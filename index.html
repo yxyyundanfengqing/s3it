@@ -59,6 +59,11 @@
             text-decoration: underline;
         }
 
+        .author-note {
+            font-size: 0.6em;
+            vertical-align: super;
+        }
+
         /* --- 顶部按钮链接 --- */
         .link-buttons {
             text-align: center;
@@ -378,9 +383,10 @@
 
         <!-- 论文标题和作者 -->
         <header>
-            <h1>Spatially Situated Social Intelligence Test (S³IT)</h1>
-            <h2>Anonymous Authors</h2>
-            <p style="text-align:center; font-style:italic;">Anonymous Conference 2025</p>
+            <h1>S³IT: A Benchmark for Spatially Situated Social Intelligence Test</h1>
+            <h2>Zhe Sun, Xueyuan Yang, Yujie Lu, Zhenliang Zhang<span class="author-note">&dagger;</span></h2>
+            <p style="text-align:center; font-style:italic;">State Key Laboratory of General Artificial Intelligence, Beijing Institute for General Artificial Intelligence (BIGAI), Beijing 100080, China</p>
+            <p style="text-align:center; font-style:italic; font-size:0.9em;">&dagger; Corresponding author</p>
         </header>
 
         <!-- 链接按钮 -->
@@ -409,7 +415,7 @@
                 </div>
                 <div class="content-text">
                     <p>
-                    The integration of embodied agents into human environments demands embodied social intelligence: reasoning over both social norms and physical constraints. However, existing evaluations fail to address this integration, as they are limited to either disembodied social reasoning (e.g., in text) or socially-agnostic physical tasks. Both approaches fail to assess an agent's ability to integrate and trade off both physical and social constraints within a realistic, embodied context. To address this challenge, we introduce Spatially Situated Social Intelligence Test (S$^{3}$IT), a benchmark specifically designed to evaluate embodied social intelligence. It is centered on a novel and challenging seat-ordering task, requiring an agent to arrange seating in a 3D environment for a group of large language model-driven (LLM-driven) NPCs with diverse identities, preferences, and intricate interpersonal relationships. Our procedurally extensible framework generates a vast and diverse scenario space with controllable difficulty, compelling the agent to acquire preferences through active dialogue, perceive the environment via autonomous exploration, and perform multi-objective optimization within a complex constraint network. We evaluate state-of-the-art LLMs on S$^{3}$IT and found that they still struggle with this problem, showing an obvious gap compared with the human baseline. Results imply that LLMs have deficiencies in spatial intelligence, yet simultaneously demonstrate their ability to achieve near human-level competence in resolving conflicts that possess explicit textual cues.
+                    The integration of embodied agents into human environments demands embodied social intelligence: reasoning over both social norms and physical constraints. However, existing evaluations fail to address this integration, as they are limited to either disembodied social reasoning (e.g., in text) or socially-agnostic physical tasks. Both approaches fail to assess an agent's ability to integrate and trade off both physical and social constraints within a realistic, embodied context. To address this challenge, we introduce Spatially Situated Social Intelligence Test (S³IT), a benchmark specifically designed to evaluate embodied social intelligence. It is centered on a novel and challenging seat-ordering task, requiring an agent to arrange seating in a 3D environment for a group of large language model-driven (LLM-driven) NPCs with diverse identities, preferences, and intricate interpersonal relationships. Our procedurally extensible framework generates a vast and diverse scenario space with controllable difficulty, compelling the agent to acquire preferences through active dialogue, perceive the environment via autonomous exploration, and perform multi-objective optimization within a complex constraint network. We evaluate state-of-the-art LLMs on S³IT and found that they still struggle with this problem, showing an obvious gap compared with the human baseline. Results imply that LLMs have deficiencies in spatial intelligence, yet simultaneously demonstrate their ability to achieve near human-level competence in resolving conflicts that possess explicit textual cues.
                     </p>
                 </div>
             </div>
@@ -507,12 +513,13 @@
             <h3>Citation</h3>
             <p>If you find our work useful in your research, please consider citing:</p>
             <div class="citation-box">
-@inproceedings{anonymous2025s3it,
-  title={Spatially Situated Social Intelligence Test (S³IT)},
-  author={Anonymous, A. and Anonymous, B.},
-  booktitle={Anonymous Conference},
-  year={2025}
-}
+                @inproceedings{2025s3it,
+                    title={S³IT: A Benchmark for Spatially Situated Social Intelligence Test},
+                    author = {Sun, Zhe and Yang, Xueyuan and Lu, Yujie and Zhang, Zhenliang},
+                    booktitle={xxx},
+                    year={2026},
+                    organization={xxx}
+                }
             </div>
         </section>
 
