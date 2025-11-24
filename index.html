@@ -110,13 +110,28 @@
             margin-top: 20px;
         }
 
+        .two-column.vertical {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 18px;
+        }
+
         .two-column .content-image {
-            flex: 1;
-            min-width: 300px;
+            flex: 1.4;
+            min-width: 340px;
+        }
+
+        .two-column.vertical .content-image {
+            flex: none;
+            min-width: auto;
         }
 
         .two-column .content-text {
-            flex: 2;
+            flex: 1;
+        }
+
+        .two-column.vertical .content-text {
+            flex: none;
         }
 
         /* --- Test Procedure (Phase切换) --- */
@@ -379,7 +394,7 @@
         <section class="content-section">
             <!-- 提示：请将下面的 src 替换为你的视频文件路径或URL -->
             <video class="teaser-video" autoplay loop muted playsinline poster="assets/teaser.png">
-                <source src="assets/5305_video.mp4" type="video/mp4">
+                <source src="assets/demo.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </section>
@@ -387,14 +402,14 @@
         <!-- Abstract -->
         <section class="content-section" id="abstract">
             <h3>Abstract</h3>
-            <div class="two-column">
+            <div class="two-column vertical">
                 <div class="content-image">
                     <!-- 提示：这是图1的占位符，请替换为你的图片路径 -->
                     <img src="assets/teaser.png" alt="Overview of the seat arrangement task">
                 </div>
                 <div class="content-text">
                     <p>
-                        Embodied agents are evolving from physical task executors to social collaborators in human environments. This evolution demands what we term embodied social intelligence: the ability to comprehend and navigate complex, implicit social norms while adhering to physical constraints. However, a critical gap pervades current research paradigms. To address this challenge, we introduce Spatially Situated Social Intelligence Test (S³IT), a benchmark specifically designed to evaluate embodied social intelligence. It is centered on a novel and challenging seat-ordering task, requiring an agent to arrange seating in a 3D environment for a group of large language model-driven (LLM-driven) NPCs with diverse identities, preferences, and intricate interpersonal relationships. Leveraging the proposed benchmark, we evaluates state-of-the-art LLMs, uncovering significant deficiencies in their grasp of social norms, including social relations, abstract preferences, and conflict resolution, as well as spatial perception within embodied environments.
+                    The integration of embodied agents into human environments demands embodied social intelligence: reasoning over both social norms and physical constraints. However, existing evaluations fail to address this integration, as they are limited to either disembodied social reasoning (e.g., in text) or socially-agnostic physical tasks. Both approaches fail to assess an agent's ability to integrate and trade off both physical and social constraints within a realistic, embodied context. To address this challenge, we introduce Spatially Situated Social Intelligence Test (S$^{3}$IT), a benchmark specifically designed to evaluate embodied social intelligence. It is centered on a novel and challenging seat-ordering task, requiring an agent to arrange seating in a 3D environment for a group of large language model-driven (LLM-driven) NPCs with diverse identities, preferences, and intricate interpersonal relationships. Our procedurally extensible framework generates a vast and diverse scenario space with controllable difficulty, compelling the agent to acquire preferences through active dialogue, perceive the environment via autonomous exploration, and perform multi-objective optimization within a complex constraint network. We evaluate state-of-the-art LLMs on S$^{3}$IT and found that they still struggle with this problem, showing an obvious gap compared with the human baseline. Results imply that LLMs have deficiencies in spatial intelligence, yet simultaneously demonstrate their ability to achieve near human-level competence in resolving conflicts that possess explicit textual cues.
                     </p>
                 </div>
             </div>
